@@ -5,6 +5,11 @@ import ru.vasilevsky.document.DocumentException;
 import java.io.*;
 
 public class App {
+    /**
+     * Точка входа программы, в методе используется {@link Checker},
+     * в который в последствии передается управление.
+     * @param args параметры запуска програмы
+     */
     public static void main(String[] args) {
         if (args.length == 0) {
             System.err.println("Пожалуйста, укажите файл!");

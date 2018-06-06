@@ -2,13 +2,25 @@ package ru.vasilevsky.document;
 
 import java.util.Map;
 
+/**
+ * Интерфейс чтения входных данных, как документов {@link Document}
+ */
 public interface DocumentReader {
-    void next() throws DocumentException;
+    /**
+     * @return следующий документ {@link Document}
+     * @throws DocumentException
+     */
+    Document next() throws DocumentException;
+
+    /**
+     * Проверяет наличие документа {@link Document}.
+     * @return правда/ложь
+     */
     boolean hasNext();
-    String getTagName();
-    String getDocName();
-    Map<String, String> getAttributes();
-    String getAttribute(String name);
+
+    /**
+     * Подсчитывает количество документов.
+     * @return количество документов
+     */
     int getDocCount();
-    boolean isDocStart();
 }

@@ -2,6 +2,9 @@ package ru.vasilevsky.document;
 
 import java.util.List;
 
+/**
+ * Модель документа.
+ */
 public class Document {
     private boolean resolved;
     private List<String> refs;

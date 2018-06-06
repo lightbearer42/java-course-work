@@ -1,30 +1,31 @@
 package ru.vasilevsky.document;
 
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Класс реализующий интерфейс {@link DocumentReader}
+ */
 public class DocumentReaderImpl implements DocumentReader {
     private static final Pattern pattern = Pattern.compile("<(\\w+)\\s*(\\w+(='.*')?)*>");
 
     private int docCount = 0;
 
-    private String curStr;
-    private String prevStr;
-
-    private String docName;
-    private boolean docStart;
-
-    private String tagName;
-    private Map<String, String> attributes;
-
     private Scanner scanner;
     private Matcher matcher;
 
+    private String curStr;
+    private String prevStr;
 
+    /**
+     *
+     * @param is - поток ввода, содержащий данные для парсинга
+     * @throws DocumentException
+     */
     public DocumentReaderImpl(InputStream is) throws DocumentException {
         scanner = new Scanner(is);
         try {
@@ -35,69 +36,45 @@ public class DocumentReaderImpl implements DocumentReader {
         }
     }
 
-    @Override
     public boolean hasNext() {
-        while (!matcher.find()) {
+        do {
             prevStr = curStr;
             if (!scanner.hasNextLine()) return false;
             curStr = scanner.nextLine().toUpperCase();
-            matcher = pattern.matcher(curStr);
-        }
+            matcher = Pattern.compile("<HTML>").matcher(curStr);
+        } while (!matcher.find());
 
         return true;
     }
 
-    @Override
-    public void next() throws DocumentException {
-        tagName = matcher.group(1);
-        if ("HTML".equals(tagName)) {
-            docName = prevStr;
-            docStart = true;
-        } else {
-            docStart = false;
-        }
-        String attrsStr = matcher.group(2);
-        attributes = null;
-        if (attrsStr != null && !attrsStr.isEmpty()) {
-            String[] attrs = matcher.group(2).split(" ");
-            attributes = new HashMap<>();
-            for (String a : attrs) {
-                Matcher m = Pattern.compile("(\\w+)(='(.*)')?").matcher(a);
-                if (!m.matches()) throw new DocumentException("Incorrect attribute!");
-                String attr = m.group(1);
-                String value = m.group(3);
-                attributes.put(attr, value);
+    public Document next() throws DocumentException {
+        Document document = new Document();
+        document.setName(prevStr);
+
+        List<String> refs = new ArrayList<>();
+        m:
+        do {
+            matcher = Pattern.compile("<A\\s+HREF='(.*)'>|(<END>)").matcher(curStr);
+
+            while (matcher.find()) {
+                if (matcher.group(2) != null) {
+                    break m;
+                } else {
+                    refs.add(matcher.group(1));
+                }
             }
-        }
+
+            prevStr = curStr;
+            if (!scanner.hasNextLine()) break;
+            curStr = scanner.nextLine().toUpperCase();
+        } while (true);
+
+        document.setRefs(refs);
+
+        return document;
     }
 
-    @Override
-    public String getTagName() {
-        return tagName;
-    }
-
-    @Override
-    public String getDocName() {
-        return docName;
-    }
-
-    @Override
-    public Map<String, String> getAttributes() {
-        return attributes;
-    }
-
-    @Override
-    public String getAttribute(String name) {
-        return attributes.get(name);
-    }
-
-    @Override
     public int getDocCount() {
         return docCount;
-    }
-
-    @Override
-    public boolean isDocStart() {
-        return docStart;
     }
 }

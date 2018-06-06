@@ -1,5 +1,6 @@
 package ru.vasilevsky.document;
 
+
 public class DocumentException extends Exception {
     public DocumentException() {
 
