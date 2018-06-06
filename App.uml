@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ru.vasilevsky.App</OriginalElement>
+  <nodes>
+    <node x="222.0" y="367.0">ru.vasilevsky.document.DocumentException</node>
+    <node x="408.5" y="579.0">ru.vasilevsky.document.DocumentReaderImpl</node>
+    <node x="0.0" y="0.0">ru.vasilevsky.document.Document</node>
+    <node x="8.0" y="355.5">ru.vasilevsky.Checker</node>
+    <node x="68.0" y="778.0">ru.vasilevsky.App</node>
+    <node x="524.0" y="323.0">ru.vasilevsky.document.DocumentReader</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ru.vasilevsky.document.DocumentReaderImpl" target="ru.vasilevsky.document.DocumentException">
+      <point x="-65.75" y="-225.0" />
+      <point x="474.25" y="554.0" />
+      <point x="433.5" y="554.0" />
+      <point x="70.5" y="59.0" />
+    </edge>
+    <edge source="ru.vasilevsky.App" target="ru.vasilevsky.Checker">
+      <point x="0.0" y="-26.0" />
+      <point x="48.5" y="70.5" />
+    </edge>
+    <edge source="ru.vasilevsky.App" target="ru.vasilevsky.document.DocumentException">
+      <point x="57.0" y="-26.0" />
+      <point x="210.5" y="554.0" />
+      <point x="292.5" y="554.0" />
+      <point x="-70.5" y="59.0" />
+    </edge>
+    <edge source="ru.vasilevsky.document.DocumentReaderImpl" target="ru.vasilevsky.document.DocumentReader">
+      <point x="65.75" y="-225.0" />
+      <point x="605.75" y="554.0" />
+      <point x="653.5" y="554.0" />
+      <point x="0.0" y="103.0" />
+    </edge>
+    <edge source="ru.vasilevsky.Checker" target="ru.vasilevsky.document.Document">
+      <point x="0.0" y="-70.5" />
+      <point x="0.0" y="136.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.6000000000000001" x="-42.333333333333485" y="115.33333333333326" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Constructors</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
